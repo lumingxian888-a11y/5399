@@ -1,14 +1,103 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>開獎號碼儲存器</title>
+<style>
+body {
+  font-family: "Noto Sans TC", Arial, sans-serif;
+  padding: 20px;
+  background: #f7f7f7;
+  text-align: center;
+}
+h1 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+input {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 18px;
+  border: 2px solid #888;
+  border-radius: 8px;
+  text-align: center;
+}
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.save {
+  background-color: #2b7cff;
+  color: white;
+}
+.clear {
+  background-color: #f44336;
+  color: white;
+}
+.output {
+  margin-top: 20px;
+  font-size: 20px;
+  color: #222;
+}
+.tip {
+  margin-top: 10px;
+  color: #666;
+  font-size: 14px;
+}
+</style>
 </head>
+<body>
 
-<body >
-<iframe src="https://lumingxian88com.github.io/88/" 
-frameborder="0" width="400" height="800">
-</iframe>
-</body>	
+<h1>開獎號碼儲存器</h1>
+
+<input id="drawInput" placeholder="輸入號碼，例如 22,27,30,32,37">
+<br>
+<button class="save" onclick="saveDraw()">💾 儲存</button>
+<button class="clear" onclick="clearDraw()">🗑️ 清除</button>
+
+<div class="output" id="showDraw">尚未輸入開獎號碼</div>
+<div class="tip">資料儲存在手機／平板的瀏覽器中，不會消失。</div>
+
+<script>
+function saveDraw() {
+  const input = document.getElementById("drawInput");
+  const value = input.value.trim();
+  if (!value) {
+    alert("請先輸入開獎號碼！");
+    return;
+  }
+  localStorage.setItem("drawNumbers", value);
+  showDraw();
+  alert("已儲存！");
+}
+
+function showDraw() {
+  const saved = localStorage.getItem("drawNumbers");
+  const output = document.getElementById("showDraw");
+  const input = document.getElementById("drawInput");
+  if (saved) {
+    output.textContent = "目前開獎號碼：" + saved;
+    input.value = saved;
+  } else {
+    output.textContent = "尚未輸入開獎號碼";
+    input.value = "";
+  }
+}
+
+function clearDraw() {
+  localStorage.removeItem("drawNumbers");
+  showDraw();
+  alert("已清除！");
+}
+
+showDraw(); // 頁面載入時自動顯示
+</script>
+
+</body>
 </html>
-
-
